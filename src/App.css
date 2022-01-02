@@ -95,6 +95,7 @@ input {
 
 form {
     width: 80%;
+    max-width: 550px;
     margin: 30px auto;
     box-shadow: 0 0 5px #0273B7;
     padding: .5em;
@@ -125,6 +126,7 @@ form button {
     font-weight: bold;
     margin-top: 20px;
     border-radius: 10px;
+    cursor: pointer;
 }
 
 .form-title {
@@ -174,6 +176,7 @@ form button {
     text-align: center;
     font-weight: 900;
     font-style: italic;
+    cursor: pointer;
 }
 
 span {

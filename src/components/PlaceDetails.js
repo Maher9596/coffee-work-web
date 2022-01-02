@@ -38,7 +38,8 @@ function PlaceDetails() {
         } catch (error) {
             console.log(error.message)
         }
-
+        setSubmit("Submitting...")
+        setSubmit("Submit")
     }
  
     useEffect(()  =>  {
@@ -73,7 +74,7 @@ function PlaceDetails() {
                             <p><span>Charger Socket Availability:</span> {review.charger}</p>
                             <p><span>How Crowded:</span> {review.people}</p>
                             <p><span>Recommend to people:</span> {review.convinience}</p>
-                            <p><span>Create On:</span> 1/1/2021</p>
+                            <p><span>Created On:</span> 1/1/2021</p>
                             </div>
                              :
                             <h1 key={places.id} style={{display:"none"}}>No Reviews...</h1>} 
