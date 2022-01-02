@@ -13,7 +13,7 @@ function PlaceDetails() {
     const [name, setName] = useState("")
     const url = "https://nodejs-coffeework.herokuapp.com/"
 
-    // MY DATA FOR THE SPECIFIC ROUTE
+    // MY LOCAL DATA FOR THE SPECIFIC ROUTE
     const places = shopsList.find(place => place.id.toString() === placeDetails)
 
     const handleSubmit = (e) => {
@@ -22,7 +22,7 @@ function PlaceDetails() {
     }
 
     // POSTING DATA TO THE DATABASE
-    const setData = () => {
+    const setData = async () => {
         axios.post(url, {
             wifi: wifi,
             charger: charger,
@@ -48,7 +48,6 @@ function PlaceDetails() {
         axios.get(url)
         .then((response) => {
             const info = response.data
-            console.log(info)
             setFetchedData(info)
         })
     }
@@ -57,21 +56,22 @@ function PlaceDetails() {
             <div>   
                  <div className='details-top'>               
                     <h1>{places.name}</h1>
-                    <img src={places.img} alt=""/>
+                    <img src={places.img} alt="" height="200px"/>
                  </div>
                 {fetchedData.map((review) => {
                     return (
                         <div className='reviews'>
                             {review.name === places.name ?
-                            <div>
+                            <div className='reviewsOk'>
                             <p><span>New Review</span></p>    
                             <p key={places.id}>WIFI Availability: {review.wifi}</p>
                             <p key={places.id}>Charger Socket Availability: {review.charger}</p>
                             <p key={places.id}>Crowd Percentage: {review.people}</p>
                             <p key={places.id}>Recommend to people: {review.wifi}</p>
+                            <p>Create On: 1/1/2021</p>
                             </div>
-                             : 
-                            <h1 key={places.id} style={{display:"none"}}>No Reviews...</h1>}                       
+                             :
+                            <h1 key={places.id} style={{display:"none"}}>No Reviews...</h1>} 
                         </div>
                     )                                 
                 })}
@@ -81,34 +81,34 @@ function PlaceDetails() {
                     <p className='form-title'>Is {places.name} a good place to work at ?</p>  
                     <p>WIFI Availability ?</p>
                     <label>Yes</label>
-                    <input type="radio" name='wifi' value="Yes" onChange={(e) => setWifi(e.target.value)} />
+                    <input required type="radio" name='wifi' value="Yes" onChange={(e) => setWifi(e.target.value)} />
                     <br /> 
                     <label>No</label>
-                    <input type="radio" name='wifi' value="No" onChange={(e) => setWifi(e.target.value)} />                  
+                    <input required type="radio" name='wifi' value="No" onChange={(e) => setWifi(e.target.value)} />                  
                     <br />
                     <p>Charging Socket Availability ?</p>
                     <label>Yes</label>
-                    <input type="radio" name="charger" value="Yes" onChange={(e) => setCharger(e.target.value)} />
+                    <input required type="radio" name="charger" value="Yes" onChange={(e) => setCharger(e.target.value)} />
                     <br /> 
                     <label>No</label>
                     <input type="radio" name="charger" value="No" onChange={(e) => setCharger(e.target.value)} />                   
                     <br />
                     <p>How crowded is the place ?</p>
                     <label>Not Crowded</label>
-                    <input type="radio" name="people" value="Not Crowded" onChange={(e) => setPeople(e.target.value)} />
+                    <input required type="radio" name="people" value="Not Crowded" onChange={(e) => setPeople(e.target.value)} />
                     <br /> 
                     <label>Mildly Crowded</label>
-                    <input type="radio" name="people" value="Mildly Crowded" onChange={(e) => setPeople(e.target.value)} />
+                    <input required type="radio" name="people" value="Mildly Crowded" onChange={(e) => setPeople(e.target.value)} />
                     <br />
                     <label>Crowded</label>
                     <input type="radio" name="people" value="Crowded" onChange={(e) => setPeople(e.target.value)} />
                     <br />
                     <p>Is the place convinient to work at ?</p>
-                    <label>Yes</label>
-                    <input type="radio" name="convinience" value="Yes" onChange={(e) => setConvinience(e.target.value)} />
+                    <label>Recommend</label>
+                    <input required type="radio" name="convinience" value="Recommend" onChange={(e) => setConvinience(e.target.value)} />
                     <br />
-                    <label>No</label>
-                    <input type="radio" name="convinience" value="No" onChange={(e) => setConvinience(e.target.value)} />
+                    <label>Don't Recommend</label>
+                    <input required type="radio" name="convinience" value="Don't Recommend" onChange={(e) => setConvinience(e.target.value)} />
                     <br /> 
                     <button>Submit</button>                
                 </form>
