@@ -25,7 +25,6 @@ function PlaceDetails() {
 
     // POSTING DATA TO THE DATABASE
     const setData = async () => {
-            setSubmit("Submitting...")
         try {
             setIsReview(false)
             let postedMessage = await axios.post(url, {
@@ -36,7 +35,6 @@ function PlaceDetails() {
                 name: name
             })
             console.log(postedMessage)
-            setSubmit("Submit")
         } catch (error) {
             console.log(error.message)
         }
