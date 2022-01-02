@@ -11,6 +11,8 @@ function PlaceDetails() {
     const [people, setPeople] = useState("")
     const [fetchedData, setFetchedData] = useState([])
     const [name, setName] = useState("")
+    const [submit, setSubmit] = useState("Submit")
+    const [isReview, setIsReview] = useState(false)
     const url = "https://nodejs-coffeework.herokuapp.com/"
 
     // MY LOCAL DATA FOR THE SPECIFIC ROUTE
@@ -23,35 +25,40 @@ function PlaceDetails() {
 
     // POSTING DATA TO THE DATABASE
     const setData = async () => {
-        axios.post(url, {
-            wifi: wifi,
-            charger: charger,
-            people: people,
-            convinience: convinience,
-            name: name
-        })
-        .then((response) => {
-            console.log(response)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            setSubmit("Submitting...")
+        try {
+            setIsReview(false)
+            let postedMessage = await axios.post(url, {
+                wifi: wifi,
+                charger: charger,
+                people: people,
+                convinience: convinience,
+                name: name
+            })
+            console.log(postedMessage)
+            setSubmit("Submit")
+        } catch (error) {
+            console.log(error.message)
+        }
+
     }
  
     useEffect(()  =>  {
         setName(places.name)
-        getData()     
-     },[])
+        getData()  
+     },[submit])
 
     // FETCHING DATA FROM THE DATABASE. IT WILL RUN ONE TIME ONLY
-    const getData = () => {
-        axios.get(url)
-        .then((response) => {
-            const info = response.data
+    const getData = async () => {
+        try {
+            const response = await  axios.get(url)
+            const info = await response.data
             setFetchedData(info)
-        })
+        } catch (error) {
+            console.log(error.message)
+        }
+
     }
-     
         return (
             <div>   
                  <div className='details-top'>               
@@ -62,13 +69,13 @@ function PlaceDetails() {
                     return (
                         <div className='reviews'>
                             {review.name === places.name ?
-                            <div className='reviewsOk'>
+                            <div  key={places.id} className='reviewsOk'>
                             <p><span>New Review</span></p>    
-                            <p key={places.id}>WIFI Availability: {review.wifi}</p>
-                            <p key={places.id}>Charger Socket Availability: {review.charger}</p>
-                            <p key={places.id}>Crowd Percentage: {review.people}</p>
-                            <p key={places.id}>Recommend to people: {review.wifi}</p>
-                            <p>Create On: 1/1/2021</p>
+                            <p><span>WIFI Availability:</span> {review.wifi}</p>
+                            <p><span>Charger Socket Availability:</span> {review.charger}</p>
+                            <p><span>How Crowded:</span> {review.people}</p>
+                            <p><span>Recommend to people:</span> {review.convinience}</p>
+                            <p><span>Create On:</span> 1/1/2021</p>
                             </div>
                              :
                             <h1 key={places.id} style={{display:"none"}}>No Reviews...</h1>} 
@@ -76,7 +83,8 @@ function PlaceDetails() {
                     )                                 
                 })}
                 {/* FORM-------------------------------------------------------------- */}
-                <div className='details'>                  
+                <div className='details'>
+                {!isReview ?   <p className='addReview' onClick={() => setIsReview(true)}>Add a review...</p> :                 
                 <form onSubmit={handleSubmit}>
                     <p className='form-title'>Is {places.name} a good place to work at ?</p>  
                     <p>WIFI Availability ?</p>
@@ -104,14 +112,15 @@ function PlaceDetails() {
                     <input type="radio" name="people" value="Crowded" onChange={(e) => setPeople(e.target.value)} />
                     <br />
                     <p>Is the place convinient to work at ?</p>
-                    <label>Recommend</label>
-                    <input required type="radio" name="convinience" value="Recommend" onChange={(e) => setConvinience(e.target.value)} />
+                    <label>I Recommend</label>
+                    <input required type="radio" name="convinience" value="I Recommend" onChange={(e) => setConvinience(e.target.value)} />
                     <br />
-                    <label>Don't Recommend</label>
-                    <input required type="radio" name="convinience" value="Don't Recommend" onChange={(e) => setConvinience(e.target.value)} />
+                    <label>I Don't Recommend</label>
+                    <input required type="radio" name="convinience" value="I Don't Recommend" onChange={(e) => setConvinience(e.target.value)} />
                     <br /> 
-                    <button>Submit</button>                
+                    <button>{submit}</button>                
                 </form>
+}
                 </div>
             </div>
         );
