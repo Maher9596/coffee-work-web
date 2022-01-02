@@ -141,12 +141,16 @@ form button {
 }
 .details-top img{
     width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
 
 /* REVIEWS------------------------------------------ */
 
 .reviewsOk {
     width: 80%;
+    max-width: 500px;
     margin: 20px auto;
     box-shadow: 0 0 3px #0273B7;
     padding: .3em;
@@ -165,6 +169,7 @@ form button {
     color: #0273B7;
     box-shadow: 0 0 3px #0273B7;
     width: 50%;
+    max-width: 300px;
     margin: 40px auto;
     text-align: center;
     font-weight: 900;
@@ -176,4 +181,13 @@ span {
     font-size: 1.1rem;
     font-weight: bold;
     font-style: oblique;
+}
+
+@media (min-width: 620px) {
+    .details-top {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
 }
