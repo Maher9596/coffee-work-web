@@ -58,7 +58,16 @@ nav h2 {
     padding: 1em;
     border: 0.5px solid rgba(0,0,0,0.16);
     border-radius: 0 10px 0 10px;
-    animation: fadeIn 3s;
+    animation: showUp 2s;
+}
+
+@keyframes showUp {
+    from {
+        margin-right: 200px;
+    }
+    to {
+        margin-right: 0;
+    }
 }
 
 .coffeePlaces-text {
@@ -66,15 +75,6 @@ nav h2 {
     flex-direction: column;
 }
 
-
-@keyframes fadeIn {
-    from {
-        margin-top: 200px;
-    }
-    to {
-        margin-left: 0;
-    }
-}
 
 .name {
     font-size: 1.5rem;
@@ -88,11 +88,13 @@ nav h2 {
 
 .coffeePlaces-img {
     border-radius: 0 10px 0 10px;
+    transition: transform 1s;
 }
 
 .coffeePlaces-img:hover {
-    transform: scale(1.05);
+    transform: translateY(-5%);
 }
+
 
 /*DETAILS ------------------------ --------*/
 
